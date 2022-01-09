@@ -14,6 +14,9 @@
   "files": [
     "Dist"
   ],
+  "bin": {
+    "vet-sign": "./bin/vet-sign"
+  },
   "scripts": {
     "preinstall": "(! command -v gulp && echo 'WARN: MISSING GULP') || gulp check-node",
     "reinstall": "rm -rf node_modules package-lock.json && npm install",
@@ -25,7 +28,34 @@
     "start": "node Dist/Src/App.js"
   },
   "eslintConfig": {
-    "extends": "@proxima-oss/eslint-config"
+    "extends": "@proxima-oss/eslint-config",
+    "overrides": [
+      {
+        "files": [
+          "*.ts"
+        ],
+        "parserOptions": {
+          "project": [
+            "./tsconfig.json"
+          ]
+        },
+        "rules": {
+          "@typescript-eslint/typedef": "off",
+          "@typescript-eslint/no-inferrable-types": [
+            "error",
+            {
+              "ignoreParameters": true,
+              "ignoreProperties": true
+            }
+          ],
+          "@typescript-eslint/explicit-function-return-type": "error",
+          "no-constant-condition": "off"
+        }
+      }
+    ],
+    "ignorePatterns": [
+      "Typings"
+    ]
   },
   "ava": {
     "extensions": [
@@ -49,7 +79,9 @@
     ]
   },
   "dependencies": {
-    "lodash": "4.17.21"
+    "commander": "8.3.0",
+    "lodash": "4.17.21",
+    "thor-devkit": "2.0.4"
   },
   "devDependencies": {
     "@proxima-oss/eslint-config": "5.0.0",
