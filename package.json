@@ -1,11 +1,11 @@
 {
-  "name": "@proximacapital/vechain-signer",
+  "name": "vet-sign",
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:proximacapital/vechain-signer.git"
+    "url": "git+ssh://git@github.com:proximacapital/vet-sign.git"
   },
-  "homepage": "https://github.com/proximacapital/vechain-signer/blob/prod/README.md",
+  "homepage": "https://github.com/proximacapital/vet-sign/blob/prod/README.md",
   "engines": {
     "node": "^16.6.1",
     "npm": ">=7.20.0"
