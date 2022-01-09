@@ -1,0 +1,41 @@
+name: build-lint-test.yml
+
+on:
+  push:
+    branches:
+      - prod
+      - stage
+      - dev
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@afe4af09a72596f47d806ee5f8b2674ec07fdc73
+      with:
+          fetch-depth: 0
+
+    - name: Load .nvmrc
+      run: echo ::set-output name=NVMRC::"$(cat .nvmrc)"
+      id: nvm
+
+    - name: Install volta (node & npm provider)
+      uses: volta-cli/action@76620aa011ba56028bb0bae35caa5f9b6118c8c7
+
+    - name: Install dependencies
+      env:
+        PROXIMA_PACKAGE_TOKEN: ${{ secrets.PROXIMA_CI }}
+      run: npm ci
+
+    - name: Build
+      run: gulp build
+
+    - name: Lint
+      run: gulp lint
+
+    - name: Test
+      run: gulp coverage
