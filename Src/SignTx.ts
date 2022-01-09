@@ -6,7 +6,7 @@ import { EChainTag, NETWORK_PROVIDER } from "./Enums";
 
 export async function SignTx(
     aTxArgs: {
-        To: string;
+        To: string | null;
         Data: string;
         Value: string;
         ChainTag: EChainTag;
