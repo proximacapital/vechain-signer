@@ -21,11 +21,11 @@ lProgram
 
         if (lPrivateKey === undefined)
         {
-            process.stdout.write("no set VET_KEY env variable\n");
+            process.stdout.write("env variable VET_KEY missing\n");
             return;
         }
 
-        const lSignedTx = SignTx(
+        SignTx(
             {
                 To: lOptions.to,
                 Data: lInput ?? "0x",
@@ -33,9 +33,10 @@ lProgram
                 ChainTag: lOptions.network?.toLowerCase() === "mainnet" ? EChainTag.Mainnet : EChainTag.Testnet,
             },
             lPrivateKey,
-        );
-
-        process.stdout.write(lSignedTx);
+        ).then((aResult: string) =>
+        {
+            process.stdout.write(aResult + "\n");
+        });
     });
 
 if (process.stdin.isTTY)

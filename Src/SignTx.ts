@@ -1,7 +1,10 @@
+import { Driver, SimpleNet } from "@vechain/connex-driver";
+import { Framework  } from "@vechain/connex-framework";
 import { secp256k1, Transaction } from "thor-devkit";
-import { EChainTag } from "./Enums";
+import { EChainTag, NETWORK_PROVIDER } from "./Enums";
 
-export function SignTx(
+
+export async function SignTx(
     aTxArgs: {
         To: string;
         Data: string;
@@ -9,8 +12,15 @@ export function SignTx(
         ChainTag: EChainTag;
     },
     aPrivKey: Buffer,
-): string
+): Promise<string>
 {
+    const lNet = new SimpleNet(NETWORK_PROVIDER[aTxArgs.ChainTag]);
+    const lDriver = await Driver.connect(lNet);
+    const lConnex = new Framework(lDriver);
+    const lLatestBlockId = lConnex.thor.status.head.id;
+    const lBlockRef = lLatestBlockId.slice(0, 18);  // 18 chars = "0x" + 8 bytes
+    lDriver.close();
+
     const lClauses = [{
         to: aTxArgs.To,
         value: aTxArgs.Value,
@@ -18,11 +28,10 @@ export function SignTx(
     }];
 
     const lGas = Transaction.intrinsicGas(lClauses);
-
     const lTxBody: Transaction.Body = {
         chainTag: aTxArgs.ChainTag,
-        blockRef: "0x0000000000000000",
-        expiration: 32,
+        blockRef: lBlockRef,
+        expiration: 32,  // 5 mins 20 sec
         clauses: lClauses,
         gasPriceCoef: 0,
         gas: lGas,
