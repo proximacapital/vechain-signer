@@ -6,10 +6,11 @@ import { EChainTag, NETWORK_PROVIDER } from "./Enums";
 
 export async function SignTx(
     aTxArgs: {
-        To: string | null;
+        To: string | undefined;
         Data: string;
         Value: string;
         ChainTag: EChainTag;
+        Gas?: string;
     },
     aPrivKey: Buffer,
 ): Promise<string>
@@ -22,19 +23,19 @@ export async function SignTx(
     lDriver.close();
 
     const lClauses = [{
-        to: aTxArgs.To,
+        to: aTxArgs.To as unknown as null,  // thor-devkit happily signs undefined
         value: aTxArgs.Value,
         data: aTxArgs.Data,
     }];
 
-    const lGas = Transaction.intrinsicGas(lClauses);
+    const lGasEstimate = Transaction.intrinsicGas(lClauses);
     const lTxBody: Transaction.Body = {
         chainTag: aTxArgs.ChainTag,
         blockRef: lBlockRef,
         expiration: 32,  // 5 mins 20 sec
         clauses: lClauses,
         gasPriceCoef: 0,
-        gas: lGas,
+        gas: aTxArgs.Gas ?? (lGasEstimate * 1.25).toFixed(0),  // take 25% on top of estimate
         dependsOn: null,
         nonce: 1337,
     };
@@ -43,6 +44,6 @@ export async function SignTx(
     const lSigningHash = lTx.signingHash();
     lTx.signature = secp256k1.sign(lSigningHash, Buffer.from(aPrivKey));
 
-    return lTx.encode().toString("hex");
+    return "0x" + lTx.encode().toString("hex");
 }
 

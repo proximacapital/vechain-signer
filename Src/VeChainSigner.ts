@@ -9,6 +9,7 @@ lProgram
     .argument("[calldata]", "transaction data, will be read from stdin if available")
     .option("-t, --to <address>", "address of the one and only clause, null for deployments")
     .option("-v, --value <wei>", "value to attach to the one and only clause", "0")
+    .option("-g, --gas <amount>", "override gas estimation with custom value")
     .option("-n, --network <mainnet | testnet>", "the network to use", "testnet")
     .action((aInput: string | undefined) =>
     {
@@ -31,6 +32,7 @@ lProgram
                 Data: lInput ?? "0x",
                 Value: lOptions.value,
                 ChainTag: lOptions.network?.toLowerCase() === "mainnet" ? EChainTag.Mainnet : EChainTag.Testnet,
+                Gas: lOptions.gas,
             },
             lPrivateKey,
         ).then((aResult: string) =>
