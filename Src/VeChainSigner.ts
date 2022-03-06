@@ -17,7 +17,7 @@ lProgram
         const lInput = gStdIn !== "" ? gStdIn : aInput;
         const lOptions = lProgram.opts();
 
-        let lPrivateKey;
+        let lPrivateKey: Buffer;
 
         if (process.env.VET_MNEMONIC !== undefined)
         {
