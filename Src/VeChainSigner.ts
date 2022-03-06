@@ -1,4 +1,5 @@
 import { Command } from "commander";
+import { mnemonic } from "thor-devkit";
 import { EChainTag } from "./Enums";
 import { SignTx } from "./SignTx";
 
@@ -16,13 +17,19 @@ lProgram
         const lInput = gStdIn !== "" ? gStdIn : aInput;
         const lOptions = lProgram.opts();
 
-        const lPrivateKey = process.env.VET_KEY !== undefined
-            ? Buffer.from(process.env.VET_KEY, "hex")
-            : undefined;
+        let lPrivateKey: Buffer;
 
-        if (lPrivateKey === undefined)
+        if (process.env.VET_MNEMONIC !== undefined)
         {
-            process.stdout.write("env variable VET_KEY missing\n");
+            lPrivateKey = mnemonic.derivePrivateKey(process.env.VET_MNEMONIC.split(" "));
+        }
+        else if (process.env.VET_KEY !== undefined)
+        {
+            lPrivateKey = Buffer.from(process.env.VET_KEY, "hex");
+        }
+        else
+        {
+            process.stdout.write("env variable VET_KEY and VET_MNEMONIC missing. Either must be present\n");
             return;
         }
 
