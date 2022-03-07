@@ -10,7 +10,7 @@ export async function SignTx(
         Data: string;
         Value: string;
         ChainTag: EChainTag;
-        Gas?: string;
+        Gas: string;
     },
     aPrivKey: Buffer,
 ): Promise<string>
@@ -28,14 +28,13 @@ export async function SignTx(
         data: aTxArgs.Data,
     }];
 
-    const lGasEstimate = Transaction.intrinsicGas(lClauses);
     const lTxBody: Transaction.Body = {
         chainTag: aTxArgs.ChainTag,
         blockRef: lBlockRef,
         expiration: 32,  // 5 mins 20 sec
         clauses: lClauses,
         gasPriceCoef: 0,
-        gas: aTxArgs.Gas ?? (lGasEstimate * 1.25).toFixed(0),  // take 25% on top of estimate
+        gas: aTxArgs.Gas,
         dependsOn: null,
         nonce: 1337,
     };

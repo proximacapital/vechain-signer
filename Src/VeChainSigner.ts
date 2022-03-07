@@ -8,9 +8,9 @@ let gStdIn = "";
 const lProgram: Command = new Command();
 lProgram
     .argument("[calldata]", "transaction data, will be read from stdin if available")
+    .requiredOption("-g, --gas <amount>", "override gas estimation with custom value")
     .option("-t, --to <address>", "address of the one and only clause, null for deployments")
     .option("-v, --value <wei>", "value to attach to the one and only clause", "0")
-    .option("-g, --gas <amount>", "override gas estimation with custom value")
     .option("-n, --network <mainnet | testnet>", "the network to use", "testnet")
     .action((aInput: string | undefined) =>
     {
