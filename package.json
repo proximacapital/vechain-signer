@@ -18,14 +18,12 @@
     "vet-sign": "./bin/vet-sign"
   },
   "scripts": {
-    "preinstall": "(! command -v gulp && echo 'WARN: MISSING GULP') || gulp check-node",
     "reinstall": "rm -rf node_modules package-lock.json && npm install",
     "compile": "gulp build",
     "build": "gulp build",
     "lint": "gulp lint",
     "test": "gulp test",
-    "coverage": "gulp coverage",
-    "start": "node Dist/Src/App.js"
+    "coverage": "gulp coverage"
   },
   "eslintConfig": {
     "extends": "@proxima-oss/eslint-config",
