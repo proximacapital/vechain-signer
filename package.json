@@ -26,34 +26,7 @@
     "coverage": "gulp coverage"
   },
   "eslintConfig": {
-    "extends": "@proxima-oss/eslint-config",
-    "overrides": [
-      {
-        "files": [
-          "*.ts"
-        ],
-        "parserOptions": {
-          "project": [
-            "./tsconfig.json"
-          ]
-        },
-        "rules": {
-          "@typescript-eslint/typedef": "off",
-          "@typescript-eslint/no-inferrable-types": [
-            "error",
-            {
-              "ignoreParameters": true,
-              "ignoreProperties": true
-            }
-          ],
-          "@typescript-eslint/explicit-function-return-type": "error",
-          "no-constant-condition": "off"
-        }
-      }
-    ],
-    "ignorePatterns": [
-      "Typings"
-    ]
+    "extends": "@proxima-oss/eslint-config/style/standard"
   },
   "ava": {
     "extensions": [
@@ -79,24 +52,24 @@
   "dependencies": {
     "@vechain/connex-driver": "2.0.8",
     "@vechain/connex-framework": "2.0.8",
-    "commander": "8.3.0",
+    "commander": "9.0.0",
     "lodash": "4.17.21",
     "thor-devkit": "2.0.4"
   },
   "devDependencies": {
-    "@proxima-oss/eslint-config": "5.0.0",
-    "@types/lodash": "4.14.177",
-    "ava": "3.15.0",
-    "c8": "7.10.0",
+    "@proxima-oss/eslint-config": "6.0.0",
+    "@types/lodash": "4.14.179",
+    "ava": "4.1.0",
+    "c8": "7.11.0",
     "del": "6.0.0",
     "gulp": "4.0.2",
-    "markdownlint": "0.24.0",
-    "markdownlint-cli": "0.30.0",
-    "ts-node": "10.4.0",
-    "tsconfig-paths": "3.12.0",
+    "markdownlint": "0.25.1",
+    "markdownlint-cli": "0.31.1",
+    "ts-node": "10.7.0",
+    "tsconfig-paths": "3.13.0",
     "tslint": "6.1.3",
     "ttypescript": "1.5.13",
-    "typescript": "4.5.2",
+    "typescript": "4.6.2",
     "typescript-transform-paths": "3.3.1"
   },
   "volta": {
