@@ -52,7 +52,7 @@
   "dependencies": {
     "@vechain/connex-driver": "2.0.8",
     "@vechain/connex-framework": "2.0.8",
-    "commander": "9.0.0",
+    "commander": "9.4.1",
     "lodash": "4.17.21",
     "thor-devkit": "2.0.4"
   },
